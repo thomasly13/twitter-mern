@@ -7,6 +7,9 @@ const csurf = require('csurf');
 const cors = require('cors');
 const { isProduction } = require('./config/keys')
 
+require('./models/User');
+require('./config/passport'); 
+const passport = require('passport');
 
 const usersRouter = require('./routes/api/users');
 const tweetRouter = require('./routes/api/tweets')
@@ -19,6 +22,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+
+app.use(passport.initialize());
+
+
 
 if (!isProduction) {
     // Enable CORS only in development because React will be on the React
